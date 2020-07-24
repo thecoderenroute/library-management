@@ -1,0 +1,134 @@
+package files;
+
+import template.Book;
+import template.Person;
+
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class FileHandler {
+
+    private final ArrayList<Book> books;
+    private final String file;
+
+    public FileHandler(String file) {
+        this.books = new ArrayList<>();
+        this.file = file;
+        if (!getConfs()) {
+            System.out.println("Locations/Statuses not added, please do so.");
+        }
+        this.read();
+    }
+
+    private static boolean getConfs() {
+        ArrayList<String>[] configs = new ArrayList[2];
+        configs[0] = new ArrayList<>();
+        configs[1] = new ArrayList<>();
+        try (Scanner reader = new Scanner(Paths.get("configs.txt"))) {
+            String[] statuses = reader.nextLine().split(",");
+            String[] locations = reader.nextLine().split(",");
+            for (String status : statuses) {
+                configs[0].add(status.trim().toLowerCase());
+            }
+            for (String location : locations) {
+                configs[1].add(location.trim().toLowerCase());
+            }
+            Book.setStatuses(configs[0]);
+            Book.setLocations(configs[1]);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error while getting configurations: " + e.getMessage());
+            return false;
+        }
+
+    }
+
+    public static void writeConfs() {
+        try {
+            PrintWriter writer = new PrintWriter("configs.txt");
+            StringBuilder statuses = new StringBuilder();
+            for (String status : Book.getStatuses()) {
+                statuses.append(status).append(",");
+            }
+            statuses.replace(statuses.length() - 1, statuses.length(), "");
+            writer.println(statuses);
+            StringBuilder locations = new StringBuilder();
+            for (String status : Book.getLocations()) {
+                locations.append(status).append(",");
+            }
+            if (Book.getLocations().size() != 0) {
+                locations.replace(locations.length() - 1, locations.length(), "");
+            }
+            writer.println(locations);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void read() {
+
+        try {
+            Files.lines(Paths.get(file))
+                    .map(row -> row.split(","))
+                    .filter(parts -> parts.length == 6)
+                    .map(parts -> new Book(Integer.parseInt(parts[0]), parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]))
+                    .forEach(this.books::add);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Book> getBooks() {
+        return this.books;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+        this.write();
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+        this.write();
+    }
+
+    public ArrayList<Book> findByName(String name) {
+        ArrayList<Book> found = new ArrayList<>();
+        for (Book book : books) {
+            if (book.contains(name)) {
+                found.add(book);
+            }
+        }
+        return found;
+    }
+
+    public ArrayList<Book> findByAuthor(String author) {
+        ArrayList<Book> found = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getAuthor().contains(author)) {
+                found.add(book);
+            }
+        }
+        return found;
+    }
+
+    private void write() {
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            books.forEach(writer::println);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Error while writing file: " + e.getLocalizedMessage());
+        }
+    }
+
+    public void close() {
+        this.write();
+    }
+
+}
