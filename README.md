@@ -11,7 +11,7 @@ There have to a be a pre-defned set of status' and locations. These have to be d
 
 You can also, add directly to the books.txt file following the following format:
 
-Books: id, name, author, publication year, status, location
+id, name, author, publication year, status, location
 
 The Author must have a period between first name, last name, and middle. (if you choose to add all 3) You can also have just last name and just lastname and first name.
 
@@ -22,7 +22,6 @@ ID's must be unique
 You can add directly to the configs.txt file directly by following the following format:
 
 status1, status2,status3
-
 location1, location2
 
 You can have any number of status' or locations but you must have atleat one.
