@@ -22,6 +22,7 @@ ID's must be unique
 You can add directly to the configs.txt file directly by following the following format:
 
 status1, status2,status3
+
 location1, location2
 
 You can have any number of status' or locations but you must have atleat one.
