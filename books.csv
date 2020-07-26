@@ -1,2 +1,2 @@
-Serial Number, Book Name, Author, Year of Publicaton (-1 if unkown), status, location, To exclude a line from the file simply add more than 6 comma seperated values.
+#Serial Number (# in the beginning of id implies a comment), Book Name, Author, Year of Publicaton (-1 if unkown), status, location
 420,Biographical Roundup, Dale Carnegie, 1960,safe,home
