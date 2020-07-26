@@ -306,7 +306,7 @@ public class UI {
             System.out.println((i + 1) + ". " + stata);
             i++;
         }
-        System.out.print("Enter the number corresponding to location: ");
+        System.out.print("Enter the number corresponding to status: ");
         int stat = Integer.parseInt(scanner.nextLine()) - 1;
         String status;
         if (stat > Book.getStatuses().size() || stat < 0) {

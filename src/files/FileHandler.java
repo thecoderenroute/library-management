@@ -27,7 +27,7 @@ public class FileHandler {
         ArrayList<String>[] configs = new ArrayList[2];
         configs[0] = new ArrayList<>();
         configs[1] = new ArrayList<>();
-        try (Scanner reader = new Scanner(Paths.get("configs.txt"))) {
+        try (Scanner reader = new Scanner(Paths.get("configs.csv"))) {
             String[] statuses = reader.nextLine().split(",");
             String[] locations = reader.nextLine().split(",");
             for (String status : statuses) {
@@ -48,7 +48,7 @@ public class FileHandler {
 
     public static void writeConfs() {
         try {
-            PrintWriter writer = new PrintWriter("configs.txt");
+            PrintWriter writer = new PrintWriter("configs.csv");
             StringBuilder statuses = new StringBuilder();
             for (String status : Book.getStatuses()) {
                 statuses.append(status).append(",");
