@@ -23,6 +23,6 @@ You can add directly to the configs.csv file directly by following the following
 
 status1, status2,status3
 
-location1, location2
+location1, location2,locatoin3
 
-You can have any number of status' or locations but you must have atleat one.
+You can have any number of status' or locations but you must have atleat one. For ease of serach, try to keep the number of locations and status' the same.
