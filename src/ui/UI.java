@@ -117,7 +117,7 @@ public class UI {
 
     private Book getBookToEdit() {
         Book bookToEdit;
-        System.out.print("Please Select Criteria to search book to edit: ");
+        System.out.println("Please Select Criteria to search book to edit: ");
         System.out.println("1. id");
         System.out.println("2. Author");
         System.out.println("3. Name");

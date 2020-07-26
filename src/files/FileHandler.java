@@ -4,7 +4,6 @@ import template.Book;
 import template.Person;
 
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -96,7 +95,6 @@ public class FileHandler {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
         }
     }
