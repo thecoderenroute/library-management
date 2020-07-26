@@ -76,9 +76,9 @@ public class UI {
         }
         System.out.println("Selected Book is : " + bookToEdit.display());
         System.out.println("What do you want to do? ");
-        System.out.println("1. Change name\n2. Change Author\n3. Change Publication Year\n 4. Change Status\n5. Change Location");
+        System.out.println("1. Change name\n2. Change Author\n3. Change Publication Year\n4. Change Status\n5. Change Location\n6. Comment it");
         int ch = Integer.parseInt(scanner.nextLine());
-        if (ch <= 0 || ch > 5) {
+        if (ch <= 0 || ch > 6) {
             System.out.println("Incorrect choice");
             return;
         }
@@ -106,6 +106,12 @@ public class UI {
                 String newLocation = this.locationGetter();
                 bookToEdit.setLocation(newLocation);
             }
+            case 6 -> {
+                fileHandler.getCommentedBooks().add(bookToEdit);
+                bookToEdit.commentBook();
+                fileHandler.getBooks().remove(bookToEdit);
+                FileHandler.writeConfs();
+            }
         }
     }
 
@@ -121,9 +127,8 @@ public class UI {
                 System.out.print("Enter id: ");
                 int id = Integer.parseInt(scanner.nextLine());
                 for (Book book : fileHandler.getBooks()) {
-                    if (book.getId() == id) {
+                    if (Integer.parseInt(book.getId()) == id) {
                         return book;
-
                     }
                 }
 
@@ -160,7 +165,7 @@ public class UI {
         int publicationYear = Integer.parseInt(scanner.nextLine());
         String status = this.statusGetter();
         String location = this.locationGetter();
-        Book book = new Book(getRandomId(), name, new Person(author), publicationYear, status, location);
+        Book book = new Book(Integer.toString(getRandomId()), name, new Person(author), publicationYear, status, location);
         System.out.println("Adding Book: " + book.display());
         fileHandler.addBook(book);
     }
@@ -342,7 +347,7 @@ public class UI {
         while (true) {
             int id = random.nextInt(1000);
             for (Book b : this.fileHandler.getBooks()) {
-                if (b.getId() == id) {
+                if (Integer.parseInt(b.getId()) == id) {
                     continue newRandom;
                 }
             }
@@ -401,7 +406,7 @@ public class UI {
                 System.out.println("Enter id: ");
                 int id = Integer.parseInt(scanner.nextLine());
                 for (Book book : fileHandler.getBooks()) {
-                    if (book.getId() == id) {
+                    if (Integer.parseInt(book.getId()) == id) {
                         found.add(book);
                         break;
                     }
@@ -439,7 +444,7 @@ public class UI {
                 System.out.print("Enter id: ");
                 int id = Integer.parseInt(scanner.nextLine());
                 for (Book book : fileHandler.getBooks()) {
-                    if (book.getId() == id) {
+                    if (Integer.parseInt(book.getId()) == id) {
                         System.out.println("Removing book: " + book.display());
                         fileHandler.removeBook(book);
                         found = true;

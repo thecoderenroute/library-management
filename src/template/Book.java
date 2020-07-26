@@ -10,11 +10,11 @@ public class Book {
     private int publicationYear;
     private String status;
     private String location;
-    private final int id;
+    private String id;
     private static ArrayList<String> statuses = new ArrayList<>();
     private static ArrayList<String> locations = new ArrayList<>();
 
-    public Book(int id, String name, Person author, int publicationYear, String status, String location) {
+    public Book(String id, String name, Person author, int publicationYear, String status, String location) {
         this.name = name.trim();
         this.author = author;
         this.publicationYear = publicationYear;
@@ -47,7 +47,7 @@ public class Book {
         return author.equals(book.author);
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -65,6 +65,10 @@ public class Book {
             }
         }
         return false;
+    }
+
+    public void commentBook() {
+        this.id = "#" + this.id;
     }
 
     public Person getAuthor() {
@@ -135,6 +139,7 @@ public class Book {
     }
 
     public String display() {
-        return "#" + this.id + ". " + this.name + " by " + this.author + " (" + this.publicationYear + ") is currently " + this.status + " at " + this.location;
+        String yearToDisplay = this.publicationYear == -1 ? "Unkown" : Integer.toString(this.publicationYear);
+        return "#" + this.id + ". " + this.name + " by " + this.author + " (" + yearToDisplay + ") is currently " + this.status + " at " + this.location;
     }
 }

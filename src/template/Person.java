@@ -31,7 +31,7 @@ public class Person {
         } else if (fullName.length == 2) {
             fName = fullName[0];
             lName = fullName[1];
-            this.name = fName + ". " + lName;
+            this.name = fName + " " + lName;
         } else if (fullName.length == 3) {
             fName = fullName[0];
             midName = fullName[1];

@@ -12,15 +12,18 @@ import java.util.Scanner;
 public class FileHandler {
 
     private final ArrayList<Book> books;
+    private final ArrayList<Book> commentedBooks;
     private final String file;
 
     public FileHandler(String file) {
         this.books = new ArrayList<>();
+        this.commentedBooks = new ArrayList<>();
         this.file = file;
         if (!getConfs()) {
             System.out.println("Locations/Statuses not added, please do so.");
         }
         this.read();
+
     }
 
     private static boolean getConfs() {
@@ -71,20 +74,39 @@ public class FileHandler {
 
     private void read() {
 
-        try {
-            Files.lines(Paths.get(file))
+        try (Scanner reader = new Scanner(Paths.get(file))) {
+            /*Files.lines(Paths.get(file))
                     .map(row -> row.split(","))
                     .filter(parts -> parts.length == 6)
+                    .filter(parts -> !parts[1].startsWith("#"))
                     .map(parts -> new Book(Integer.parseInt(parts[0]), parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]))
                     .forEach(this.books::add);
+            */
+            while (reader.hasNext()) {
+                String line = reader.nextLine();
+                String[] parts = line.split(",");
+                if (parts.length == 6) {
+                    if (parts[0].startsWith("#")) {
+                        this.commentedBooks.add(new Book(parts[0].substring(1), parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]));
+                    } else {
+                        this.books.add(new Book(parts[0], parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]));
+                    }
+
+                }
+            }
 
         } catch (Exception e) {
+            System.out.println(e);
             e.printStackTrace();
         }
     }
 
     public ArrayList<Book> getBooks() {
         return this.books;
+    }
+
+    public ArrayList<Book> getCommentedBooks() {
+        return this.commentedBooks;
     }
 
     public void addBook(Book book) {
@@ -121,6 +143,7 @@ public class FileHandler {
         try {
             PrintWriter writer = new PrintWriter(file);
             books.forEach(writer::println);
+            commentedBooks.forEach(writer::println);
             writer.close();
         } catch (Exception e) {
             System.out.println("Error while writing file: " + e.getLocalizedMessage());
