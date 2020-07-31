@@ -117,25 +117,7 @@ public class FileHandler {
         this.write();
     }
 
-    public ArrayList<Book> findByName(String name) {
-        ArrayList<Book> found = new ArrayList<>();
-        for (Book book : books) {
-            if (book.contains(name)) {
-                found.add(book);
-            }
-        }
-        return found;
-    }
 
-    public ArrayList<Book> findByAuthor(String author) {
-        ArrayList<Book> found = new ArrayList<>();
-        for (Book book : books) {
-            if (book.getAuthor().contains(author)) {
-                found.add(book);
-            }
-        }
-        return found;
-    }
 
     private void write() {
         try {
