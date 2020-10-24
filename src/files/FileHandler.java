@@ -74,21 +74,15 @@ public class FileHandler {
     private void read() {
 
         try (Scanner reader = new Scanner(Paths.get(file))) {
-            /*Files.lines(Paths.get(file))
-                    .map(row -> row.split(","))
-                    .filter(parts -> parts.length == 6)
-                    .filter(parts -> !parts[1].startsWith("#"))
-                    .map(parts -> new Book(Integer.parseInt(parts[0]), parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]))
-                    .forEach(this.books::add);
-            */
+
             while (reader.hasNext()) {
                 String line = reader.nextLine();
                 String[] parts = line.split(",");
                 if (parts.length == 6) {
                     if (parts[0].startsWith("#")) {
-                        this.commentedBooks.add(new Book(parts[0].substring(1), parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]));
+                        this.commentedBooks.add(new Book(parts[0], parts[1], new Person(parts[2]), parts[3].trim(), parts[4], parts[5]));
                     } else {
-                        this.books.add(new Book(parts[0], parts[1], new Person(parts[2]), Integer.parseInt(parts[3].trim()), parts[4], parts[5]));
+                        this.books.add(new Book(parts[0], parts[1], new Person(parts[2]), parts[3].trim(), parts[4], parts[5]));
                     }
 
                 }
@@ -116,7 +110,6 @@ public class FileHandler {
         books.remove(book);
         this.write();
     }
-
 
 
     private void write() {

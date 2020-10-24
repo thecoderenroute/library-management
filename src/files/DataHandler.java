@@ -24,7 +24,7 @@ public class DataHandler {
         System.out.print("Enter name of author: ");
         String author = scanner.nextLine();
         System.out.print("Enter Publication year: ");
-        int publicationYear = Integer.parseInt(scanner.nextLine());
+        String publicationYear = scanner.nextLine();
         String status = this.statusGetter();
         String location = this.locationGetter();
         Book book = new Book(Integer.toString(getRandomId()), name, new Person(author), publicationYear, status, location);
@@ -82,8 +82,8 @@ public class DataHandler {
             i++;
         }
         System.out.print("Enter the number corresponding to location: ");
-        int loc = Integer.parseInt(scanner.nextLine());
-        if (loc > Book.getLocations().size() || loc <= 0) {
+        int loc = Integer.parseInt(scanner.nextLine()) - 1;
+        if (loc > Book.getLocations().size() || loc < 0) {
             return -1;
         }
         return loc;
@@ -283,7 +283,7 @@ public class DataHandler {
             }
             case 3 -> {
                 System.out.println("Enter new Publication year");
-                int newPYear = Integer.parseInt(scanner.nextLine());
+                String newPYear = scanner.nextLine();
                 bookToEdit.setPublicationYear(newPYear);
             }
             case 4 -> {

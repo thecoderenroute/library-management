@@ -14,10 +14,15 @@ public class Book {
     private static ArrayList<String> statuses = new ArrayList<>();
     private static ArrayList<String> locations = new ArrayList<>();
 
-    public Book(String id, String name, Person author, int publicationYear, String status, String location) {
+    public Book(String id, String name, Person author, String publicationYear, String status, String location) {
         this.name = name.trim();
         this.author = author;
-        this.publicationYear = publicationYear;
+        boolean isNumeric = publicationYear.chars().allMatch(Character::isDigit);
+        if (isNumeric) {
+            this.publicationYear = Integer.parseInt(publicationYear);
+        } else {
+            this.publicationYear = -1;
+        }
         if (statuses.contains(status)) {
             this.status = status;
         } else {
@@ -51,11 +56,6 @@ public class Book {
         return this.id;
     }
 
-    /*
-    public String getName() {
-        return name;
-    }
-*/
     public boolean contains(String name) {
         String[] words = name.split(" ");
         System.out.println(Arrays.toString(words));
@@ -96,8 +96,13 @@ public class Book {
 
     }
 
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
+    public void setPublicationYear(String publicationYear) {
+        boolean isNumeric = publicationYear.chars().allMatch(Character::isDigit);
+        if (isNumeric) {
+            this.publicationYear = Integer.parseInt(publicationYear);
+        } else {
+            this.publicationYear = -1;
+        }
 
     }
 
